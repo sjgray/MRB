@@ -1,5 +1,5 @@
 MRB: Multi-ROM Builder  (c)2024 Steve J. Gray
-======================  Version 1.1, May 27, 2024
+======================  Version 1.2, Jun 1, 2024
 
 This is a tool to build binary images from multiple source binaries, for use in ROM
 switchers, bank-switched ROM adapters etc.
@@ -28,7 +28,7 @@ History
 
 V1.0 2024-05-26 Initial Release.
 V1.1 2024-05-27 Added Split function.
-V1.2 2024-05-31 Add 16-bit mode
+V1.2 2024-06-01 Add 16-bit mode. New Github repository: https://github.com/sjgray/MRB
 
 If you have comments or suggestions please contact me at:
 
