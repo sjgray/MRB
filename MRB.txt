@@ -1,0 +1,215 @@
+MRB: Multi-ROM Builder  (c)2024 Steve J. Gray
+======================  Version 1.2, May 31/2024
+
+This is a tool to build binary images from a set of individual files that can then be burned to ROM
+or EPROM etc, to be used in Multi-Carts, Bank-switched ROM and other similar uses. This can also be
+used to take a binary and split it back up into its individual files again. I have several projects
+that this can be used for, such as:
+
+* Multi-EditorROM
+* Multi-EditorROM+
+* Multi-EditorROM with 40/80 column switcher
+* PET/CBM Multi-ROM
+* CBM-II ROM Cart
+* C64SG
+* SuperColourPET
+* CLCD Recreation
+
+The above projects all allow you to have multiple ROM/EPROM sets in one. Sets can be selected either
+via dip switch or software control. The Mult-EditorROM board allow you to have 16 Editor, Firmware,
+or Character ROMs in one EPROM selectable via DIP switch. Editor ROMs can be either 2K or 4K in size so
+padding is necessary. The CBM-II ROM Cart allows you to select 1 SET of 3 cartridge images plus one
+additional image, from a total of 8 different sets. The C64SG board supports 4 different sets of
+firmware ROMs (BASIC/KERNAL/Character) via dipswitch.
+
+This is a generic tool that can be used for much more than the above. The Target ROM can be up to
+2MB in size and can support up to 256 slots. Maybe you have a C64 ROM cart full of games. This tool
+can let you add different game roms in specific slots then generate a binary file that can be burned
+to EPROM for the ROM socket on the cartridge board.
+
+
+About
+-----
+
+Click "About" to see the copyright, date and version# of the program.
+
+This program was written in VB6, and requires the proper VB6 runtimes for Windows. Most versions of
+Windows upto and including Windows 11, already include the VB runtimes.
+
+
+Setting Target
+--------------
+
+The Target binary size and number of slots can be selected from drop-down menus. Whenever these are
+changed it will calculate the slot size and display it beneath. The number of slots displayed may be
+2,4,8, or 16 depending on target setting. If there are more than 16 slots then a scroll-bar will appear
+to let you scroll up and down through the slots.
+
+The "Group" drop-down lets you specify how many slots are in a group. This allows you to group multiple
+slots for applications where multiple ROMs (of the same size) are grouped together in one selectable
+group. For example, on C64SG one "set" includes BASIC, KERNAL, Character Sets, and one unused area, or
+4 slots. The dip switches select all 4 slots at a time for each "set". There are 4 sets. So, your total
+number of SLOTS is 16, and your Group is set to 4.
+
+When the group is set the colour of the first slot's offset will be light green and the rest of the slots
+will be dark green. This gives an easy indicator of which slots are in a group.
+
+
+Slot Options
+------------
+
+ Depending on your source files you may want to enable appropriate options:
+
+* Allow short files...	If unchecked then all source files must be EXACTLY the correct number of bytes
+			as the Slot Size (Load Addresses are allowed).
+			If checked then smaller size files can be added, and will be padded to the correct
+			slot size. WARNING: if smaller files include a Load Address there is no way to
+			detect this, so this will likely cause issues with the resulting target file!
+
+* Allow empty slots...	When checked this will allow slots to be empty. The space they would have taken
+			will be padded to ensure following files are at the correct position.
+
+* Pad Byte...		You can specify a decimal number from 0 to 255 for the value of the padding byte.
+
+
+Selecting and Adding Files
+--------------------------
+
+The program will open with a single screen. There are up to 16 numbered "slots" where you can
+specify a BINARY/ROM file to be included. One slot will be highlighted in RED. This is the currently
+selected slot. Next to the slot number is the Offset address (in Hex) in green, then the slot entry
+box for the filename, then a STATUS box that will show the file size or "%CMD" (if it is a command).
+The background colour will show the status of the slot:
+
+Green... Good. The file is the correct size for the slot
+Yellow...Warn. The file may contain a Load Address. Make sure to check your source file.
+Red......Error. The file is too small or too big, or does not exists. Depends on OPTIONS that are set.
+Grey.....Cmd. The slot contains a command string.
+Black....No File. There is no file for this slot, however this is not an error if "Allow Empty" is set.
+
+To set a filename in the slot you can:
+
+1) Click in any filename box and type a valid filename.
+2) Cursor UP or Down to select the slot. ENTER goes to next slot. HOME to top slot.
+3) Double-click the slot number to open the file selector dialog.
+4) Select a slot, then click "Add Binary".
+5) Drag a file, or files, from a Folder to any slot. Multiple files will be added
+   starting from the slot that you drop them into. Existing files will be overwritten.
+
+Generally you will want to use pure ROM/BIN files that do not contain any extra headers etc.
+
+Do not use CRT files, P00 files or any file which contains header or any other non-ROM content. Proper
+ROM files are generally some power-of-2 multiple of 1,024 bytes (1 KB). Some files for CBM systems
+might have a 2 byte "Load Address" at the front of the file. If your file exactly fits into the selected
+slot size plus 2 bytes then there will be a warning, and the program will automatically remove these
+two bytes for you. If the file is smaller than the slot size then automatic load address detection will
+not work and likely cause issues.
+
+The program will hide the full path of the file except while editing the filename.
+
+
+Ordering Files
+--------------
+
+If you find the files out of order you can use the bottom left buttons to arrange them.
+
+Move UP.......... Moves the selected slot up
+Move DOWN........ Moves the selected slot down.
+Delete........... Deletes the selected slot and moves lower slots up
+Insert........... Moves selected slot and below down leaving an empty slot
+Clear............ Erase the entry. Will not move lower slots.
+
+
+Working With Sets
+-----------------
+
+Enter a Set Description at the top of the window. You might want to include the Target size and number of
+slots in the description. The number of slots selected determines your SET size. When all your slots are
+specified you can click "Save Set" to save them to a TXT file. Only the correct number of slots will be
+saved, along with the description.
+
+Click "Load Set" to load a saved set. This will load all slots specified in the SET file (up to 256 slots)
+but does not change the currently select number of slots or target size. Make sure these are set. Any
+extra slots loaded will be ignored but will remain in the program, however they will be lost when the
+SET is saved.
+
+ Use the "New Set" to erase the current set. It will automatically fill all the slots with the "%FILL xx",
+where "xx" is the slot number. This means if you do not supply a filename the area will be filled with
+the specific BYTE value.
+
+
+8-BIT and 16-BIT Mode
+---------------------
+
+This utility can use 8-bit or 16-bit files. The default is 8-bit mode for normal files. In this mode
+each file is independant and are treated as "whole". No conversion is done. In this mode you can
+process 8 or 16 bit files if you do not need to convert them. When 16-bit mode is enabled it allows
+you to convert 16-bit files into two 8-bit files. What this does is read one 16-bit Word and write
+to two 8-bit files (Even/Odd). Similarly you can also re-assemble two 8-bit files into one 16-bit file.
+
+Note:	There are some limitations in 16-bit mode. You can not mix files with commands in the same
+	pair. When usimg padding only the first slot of a pair is used. As well, you should not use
+	two different-length files for combining.
+
+
+Building a Set Image
+--------------------
+
+When your slots are set click "Build It!". It will check all slots to make sure:
+
+1) The file exists
+2) The file is the correct size
+
+If "Allow Short files" is enabled, files are automatically padded to fill the slot.
+If "Allow Empty Slots" is enabled, then the entire slot is padded with the Pad Byte.
+ 
+If everything checks out it will ask you for a filename to save to. Enter one and click SAVE.
+Your Target file is created!
+
+
+Burning an Image
+----------------
+
+The resulting target file can be written to an appropriate ROM/EPROM/FLASH etc using most modern
+programmer devices. It does not contain a Load Address so it is suitable for programming, but
+you may have to load it into your computer with a special load command for testing (or use in
+and emulator etc).
+
+
+Splitting Files
+---------------
+
+You can also split a large file into individual files again. Clear the SET, then load the file into
+SLOT 0. You should see the file size on the right. This should be a power of two. Adjust the Target
+to match the filesize, then select the number of slots that are included in the file. For example,
+if you had a multicart that said "32-in-1 Games" you might assume there are 32 slots (ie: a power of
+two). Or, if you have a rom switcher with 4 switches you likely have 16 slots (2 to the power of 4).
+
+Click the SPLIT button. It will display a message and ask you to confirm. It will write out the
+files with a numbered extension like ".000", ".001" etc up to the number of slots. It will put
+the filenames into the slots for you. Give the SET a new name, then save the SET. You can now
+re-order the files or replace slots with new files and create an entirely new binary.
+
+
+Github
+------
+
+The source code, executable and doc files are available on Github here:
+
+	https://github.com/sjgray/Multi-ROM-Builder
+
+
+Conclusion
+----------
+
+This utility was written to support my many Multi-ROM projects and was written to be a quick tool
+and may contain errors, bugs etc, and may crash with incorrect input. I suggest you verify that
+the Target file contains the correct information before using it in a device.
+
+If you have comments or suggestions please contact me at:
+
+sjgray@rogers.com
+www.stevegray.ca
+www.cbmsteve.ca
+
+Thank-you!

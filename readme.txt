@@ -1,0 +1,39 @@
+MRB: Multi-ROM Builder  (c)2024 Steve J. Gray
+======================  Version 1.1, May 27, 2024
+
+This is a tool to build binary images from multiple source binaries, for use in ROM
+switchers, bank-switched ROM adapters etc.
+
+Features
+--------
+
+* Load and Save SET files.
+* Creates binaries up to 2MB in size
+* Up to 256 selectable slots.
+* Drag-and-Drop files into slots.
+* Colour-coded display status for each slot.
+* Command for filling an empty slot with a specific fill byte.
+* Options for allowing short files or empty slots.
+* Cursor up/down to select slots.
+* Can set the padding byte value for empty slots and/or short files.
+* Can split a large file into smaller slot-sized files.
+* Supports 16-bit mode. Uses file pairs - Even and Odd
+
+This program is written in VisualBASIC 6 and requires the VB runtimes to be installed.
+Runtimes should be pre-installed in most versions of Windows upto Windows 11.
+
+
+History
+-------
+
+V1.0 2024-05-26 Initial Release.
+V1.1 2024-05-27 Added Split function.
+V1.2 2024-05-31 Add 16-bit mode
+
+If you have comments or suggestions please contact me at:
+
+sjgray@rogers.com
+www.stevegray.ca
+www.cbmsteve.ca
+
+Thank-you!
