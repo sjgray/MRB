@@ -1528,7 +1528,7 @@ Private Sub Form_Load()
         lblSize(A).ForeColor = vbBlack
     Next A
     
-    NewSet                'Init Slots
+    NewSet                  'Init Slots
     
     Ready = True            'Init complete
     SetSlotSize             'Init Slot size and Draw the slots (hides as needed, uses TopNum)
@@ -1563,6 +1563,7 @@ Private Sub SetSlotSize()
     Next A
     
     DrawSlots
+    
 End Sub
 
 '--- Draw/Update Slot entries
@@ -1585,33 +1586,33 @@ Private Sub DrawSlots()
     
     For A = 0 To 15
         If A < NumSlots Then
-            N = TopNum + A                             'N is the pointer to the actual slot
-            Filename = File(N)                          'Get the Filename/Cmd string
+            N = TopNum + A                                          'N is the pointer to the actual slot
+            Filename = File(N)                                      'Get the Filename/Cmd string
             
             If N = SelNum Then
-                lblN(A).BackColor = vbRed               'Selected is made RED
+                lblN(A).BackColor = vbRed                           'Selected is made RED
             Else
-                lblN(A).BackColor = vbBlue              'Un-Selected is BLUE
+                lblN(A).BackColor = vbBlue                          'Un-Selected is BLUE
             End If
             
-            lblN(A).Caption = Str(N)                    'Slot Number
-            lblK(A).Caption = SlotAddr(N)               'Address Offset
-            txtFN(A).Text = Base(N)                     'Filename entry
+            lblN(A).Caption = Str(N)                                'Slot Number
+            lblK(A).Caption = SlotAddr(N)                           'Address Offset
+            txtFN(A).Text = Base(N)                                 'Filename entry
             
             If (GroupFlag = True) And (N Mod GroupSize) = 0 Then
-                    lblK(A).BackColor = vbGreen         'Light Green means start of group
+                    lblK(A).BackColor = vbGreen                     'Light Green means start of group
             Else
-                lblK(A).BackColor = &HC000&             'Dk.Green normal
+                lblK(A).BackColor = &HC000&                         'Dk.Green normal
             End If
                   
             If Left(Filename, 1) = "%" Then
-                lblSize(A).Caption = CMD                'COMMAND identifier
-                lblSize(A).BackColor = &HE0E0E0         'Lt.Grey
+                lblSize(A).Caption = CMD                            'COMMAND identifier
+                lblSize(A).BackColor = &HE0E0E0                     'Lt.Grey
             Else
-                If FileInfo(N) = "?" Then               'Check if file exists (ie new set loaded)
+                If FileInfo(N) = "?" Then                           'Check if file exists (ie new set loaded)
                     If Exists(Filename) = True Then
-                        FLen = FileLen(Filename)        'Get the length then close it
-                        FileInfo(N) = Str(FLen)         'Set Info and Length
+                        FLen = FileLen(Filename)                    'Get the length then close it
+                        FileInfo(N) = Str(FLen)                     'Set Info and Length
                         FileSize(N) = FLen
                     Else
                         FileInfo(N) = ""
@@ -1619,39 +1620,39 @@ Private Sub DrawSlots()
                     End If
                 End If
 
-                lblSize(A).Caption = FileInfo(N)        'File Info/Size
-                FLen = FileSize(N)                      'Check File size against Slotsize
+                lblSize(A).Caption = FileInfo(N)                    'File Info/Size
+                FLen = FileSize(N)                                  'Check File size against Slotsize
                 If FLen = 0 Then
                     If EmptyFlag = True Then
-                        lblSize(A).BackColor = vbBlack  'Black if 0 and Empty allowed
+                        lblSize(A).BackColor = vbBlack              'Black if 0 and Empty allowed
                     Else
-                        lblSize(A).BackColor = vbRed    'Black if 0
+                        lblSize(A).BackColor = vbRed                'Black if 0
                     End If
                     
                 ElseIf FLen < SlotSize Then
                     If ShortFlag = True Then
-                        lblSize(A).BackColor = &HC000&      'Green if Good and short files allowed
+                        lblSize(A).BackColor = &HC000&              'Green if Good and short files allowed
                     Else
-                        lblSize(A).BackColor = vbRed    'Otherwise Red
+                        lblSize(A).BackColor = vbRed                'Otherwise Red
                     End If
                     
                 ElseIf FLen = SlotSize Then
-                        lblSize(A).BackColor = &HC000&      'Green if Good
+                        lblSize(A).BackColor = &HC000&              'Green if Good
                         
                 ElseIf FLen - 2 = SlotSize Then
-                    lblSize(A).BackColor = vbYellow     'Yellow if Load Address included
+                    lblSize(A).BackColor = vbYellow                 'Yellow if Load Address included
                     
                 Else
-                    lblSize(A).BackColor = vbRed        'Red if Greater
+                    lblSize(A).BackColor = vbRed                    'Red if Greater
                 End If
             End If
                       
-            lblN(A).Visible = True                  'Slot Number
-            lblK(A).Visible = True                  'Address Offset
-            txtFN(A).Visible = True                 'Filename
-            lblSize(A).Visible = True               'File Size
+            lblN(A).Visible = True                                  'Slot Number
+            lblK(A).Visible = True                                  'Address Offset
+            txtFN(A).Visible = True                                 'Filename
+            lblSize(A).Visible = True                               'File Size
         Else
-            lblN(A).Visible = False
+            lblN(A).Visible = False                                 'Otherwise hide the slot elements
             txtFN(A).Visible = False
             lblK(A).Visible = False
             lblSize(A).Visible = False
@@ -1659,7 +1660,7 @@ Private Sub DrawSlots()
         
     Next A
     
-    If VScroll1.Visible = True Then VScroll1.Value = TopNum     'Update scrollbar if visible
+    If VScroll1.Visible = True Then VScroll1.Value = TopNum         'Update scrollbar if visible
     
     DoEvents
     
@@ -1689,7 +1690,7 @@ Private Sub SplitSlot()
     
     If MsgBox(Temp, vbOKCancel, "Split SLOT 0 file.") = vbCancel Then Exit Sub
     
-    Temp = FNoExt(Filename)                                          'The file path without extension
+    Temp = FNoExt(Filename)                                         'The file path without extension
     
     FIO = FreeFile
     Open Filename For Binary As FIO                                 'Open the source file to READ
@@ -1704,7 +1705,7 @@ Private Sub SplitSlot()
         FileInfo(i) = Str(SlotSize)                                 'FileInfo
         
         If Mode16 = True Then
-            OutFile2 = Temp & "." & Format(i + 1, "000")             'Build the output filename
+            OutFile2 = Temp & "." & Format(i + 1, "000")            'Build the output filename
             FIO3 = FreeFile
             Open OutFile2 For Output As FIO3                        'Open destination file to WRITE
             File(i + 1) = OutFile2                                  'Filename with path
@@ -1742,16 +1743,16 @@ End Sub
 Private Sub UpdateEdit()
     If EdNum < 0 Then
         'Debug.Print "UpdateEdit abort"
-        Exit Sub                  'Exit if NO slot selected
+        Exit Sub                                                    'Exit if NO slot selected
     End If
     
     'Debug.Print "UpdateEdit"; EdNum
     
-    File(EdNum) = txtFN(EdIndex).Text           'Restore updated filename
+    File(EdNum) = txtFN(EdIndex).Text                               'Restore updated filename
     If Left(File(Edmum), 1) = "%" Then
-        Base(EdNum) = File(EdNum)               'Copy CMD to BASE name
+        Base(EdNum) = File(EdNum)                                   'Copy CMD to BASE name
     Else
-        Base(EdNum) = FName(File(EdNum))        'Update BASE name from current filename
+        Base(EdNum) = FName(File(EdNum))                            'Update BASE name from current filename
     End If
     EdNum = -1
 End Sub
@@ -1785,15 +1786,15 @@ Private Sub SelectN(ByVal Index As Integer)
     
     '-- Check for scrolling
     If (Index < 0) Then
-        If TopNum > 0 Then TopNum = TopNum - 1          'We can scroll UP
+        If TopNum > 0 Then TopNum = TopNum - 1                      'We can scroll UP
     End If
     
     If (Index > 15) Then
         If MaxSlot > 15 Then
             If (TopNum + Index) < MaxSlot Then
-                TopNum = TopNum + 1: Index = Index - 1  'We can scroll DOWN
+                TopNum = TopNum + 1: Index = Index - 1              'We can scroll DOWN
             Else
-                TopNum = MaxSlot - 15                   'We can't scroll - Force to last position
+                TopNum = MaxSlot - 15                               'We can't scroll - Force to last position
             End If
         End If
     End If
@@ -1805,15 +1806,15 @@ Private Sub SelectN(ByVal Index As Integer)
     If Index > MaxSlot Then Index = MaxSlot
     
     '-- Set Num and Index
-    SelNum = TopNum + Index                         'Index to slot data
+    SelNum = TopNum + Index                                         'Index to slot data
     SelIndex = Index
     EdNum = SelNum
-    EdIndex = Index                                 'Visible Slot number
+    EdIndex = Index                                                 'Visible Slot number
     
     DrawSlots
     
-    txtFN(EdIndex).Text = File(EdNum)               'Edit the full path
-    txtFN(EdIndex).SetFocus                         'Activate the cursor
+    txtFN(EdIndex).Text = File(EdNum)                               'Edit the full path
+    txtFN(EdIndex).SetFocus                                         'Activate the cursor
 
     'Debug.Print "SelectN done"
 End Sub
@@ -1822,14 +1823,14 @@ Private Sub txtFN_KeyDown(Index As Integer, KeyCode As Integer, Shift As Integer
     Dim N As Integer
     
     Select Case KeyCode
-        Case 36 'Home
+        Case 36                     'Home
             TopNum = 0
             N = -15: GoSub KeyDSub
             
-        Case 38 'Cursor Up
+        Case 38                     'Cursor Up
             N = -1: GoSub KeyDSub
             
-        Case 40 'Cursor Down
+        Case 40                     'Cursor Down
             N = 1: GoSub KeyDSub
             
     End Select
@@ -1849,11 +1850,11 @@ Private Sub txtFN_KeyPress(Index As Integer, KeyAscii As Integer)
         Case 13
             If (Index < 15) And (Index < SlotSize) Then
                 txtFN(Index + 1).SetFocus
-                KeyAscii = 0
+                KeyAscii = 0                                'Zero to prevent beep
             End If
             
             If (Index = 15) And (TopNum + 15) < MaxSlot Then
-                TopNum = TopNum + 1                       'Move top slot down
+                TopNum = TopNum + 1                         'Move top slot down
                 SelNum = SelNum + 1                         'Make new slot selected
                 Index = 0
                 DrawSlots                                   'Draw all slots
@@ -1887,11 +1888,11 @@ Private Sub NewSet()
         FileInfo(A) = CMD
     Next A
 
-    TopNum = 0                      'Set to top of list
-    SelNum = 0                      'Selected SET Number
-    SelIndex = 0                    'Selected visible SLOT
-    EdNum = -1                      'Edit SET number (-1 means none set)
-    EdIndex = 0                     'Edit visible SLOT
+    TopNum = 0                                              'Set to top of list
+    SelNum = 0                                              'Selected SET Number
+    SelIndex = 0                                            'Selected visible SLOT
+    EdNum = -1                                              'Edit SET number (-1 means none set)
+    EdIndex = 0                                             'Edit visible SLOT
     
     txtDesc.Text = "Multi-ROM Set"
     DoEvents
@@ -1916,7 +1917,7 @@ Private Sub LoadSet()
     Dim Filename As String
     Dim FIO As Integer, i As Integer, Tmp As String
     
-    On Local Error Resume Next                          'Allow incomplete set file
+    On Local Error Resume Next                              'Allow incomplete set file
     
     Filename = FileOpenSave("", 0, 1, "Load Set")
     If Exists(Filename) = True Then
@@ -1924,20 +1925,20 @@ Private Sub LoadSet()
         FIO = FreeFile
         Open Filename For Input As FIO
         i = 0
-        Line Input #FIO, Tmp: txtDesc.Text = Tmp        'Set Description
+        Line Input #FIO, Tmp: txtDesc.Text = Tmp            'Set Description
         Do While Not EOF(FIO)
             Tmp = ""
-            Line Input #FIO, Tmp                        'Path+Filename
-            File(i) = Tmp                               'Filename including path
-            Base(i) = FName(Tmp)                        'Base filename - no path (for display)
-            FileInfo(i) = "?"                           'File Size string
-            FileSize(i) = 0                             'File Size
+            Line Input #FIO, Tmp                            'Path+Filename
+            File(i) = Tmp                                   'Filename including path
+            Base(i) = FName(Tmp)                            'Base filename - no path (for display)
+            FileInfo(i) = "?"                               'File Size string
+            FileSize(i) = 0                                 'File Size
             
             i = i + 1: If i > 255 Then Exit Do
         Loop
         
         Close FIO
-        SelectN 0                                       'Select first file slot
+        SelectN 0                                           'Select first file slot
     End If
     
 End Sub
@@ -1950,9 +1951,9 @@ Private Sub SaveSet()
     If Overwrite(Filename) = True Then
         FIO = FreeFile
         Open Filename For Output As FIO
-        Print #FIO, txtDesc.Text                    'Set Description
+        Print #FIO, txtDesc.Text                            'Set Description
         For i = 0 To MaxSlot
-            Print #FIO, File(i)                     'Path+Filename
+            Print #FIO, File(i)                             'Path+Filename
         Next i
         Close FIO
     End If
@@ -1968,10 +1969,11 @@ End Sub
 Private Sub SwapSlots(ByVal P1 As Integer, ByVal P2 As Integer)
     Dim Tmp As String, N As Single
     
-        Tmp = Base(P1): Base(P1) = Base(P2): Base(P2) = Tmp
-        Tmp = File(P1): File(P1) = File(P2): File(P2) = Tmp
-        Tmp = FileInfo(P1): FileInfo(P1) = FileInfo(P2): FileInfo(P2) = Tmp
-        N = FileSize(P1): FileSize(P1) = FileSize(P2): FileSize(P2) = N
+    Tmp = Base(P1): Base(P1) = Base(P2): Base(P2) = Tmp
+    Tmp = File(P1): File(P1) = File(P2): File(P2) = Tmp
+    Tmp = FileInfo(P1): FileInfo(P1) = FileInfo(P2): FileInfo(P2) = Tmp
+    N = FileSize(P1): FileSize(P1) = FileSize(P2): FileSize(P2) = N
+
 End Sub
 
 '---- MoveDown
@@ -1979,13 +1981,11 @@ End Sub
 Private Sub MoveDown()
     Dim N As Integer
     
-    N = TopNum + SelIndex
-    'Debug.Print "--MoveDownSub: TopNum="; TopNum; " SelNum="; N: DoEvents
+    N = TopNum + SelIndex                               'Debug.Print "--MoveDownSub: TopNum="; TopNum; " SelNum="; N: DoEvents
     If N < MaxSlot Then
         SwapSlots N, N + 1
-        'SelectN SelNum + 1
     End If
-    'Debug.Print "MoveDownSub done."; N
+                                                        'Debug.Print "MoveDownSub done."; N
 End Sub
 
 '---- MoveUp
@@ -1997,7 +1997,6 @@ Private Sub MoveUp()
     
     If SelNum > 0 Then
         SwapSlots N, N - 1
-        'SelectN SelNum - 1
     End If
     
 End Sub
@@ -2328,14 +2327,15 @@ End Function
 ' Return the filename only from the end of the path
 Public Function FName(ByVal Path As String) As String
 
-Dim j As Integer
+    Dim j As Integer
 
-j = InStrRev(Path, "\")
-If j > 0 Then
-    FName = Mid(Path, j + 1)
-Else
-    FName = Path
-End If
+    j = InStrRev(Path, "\")
+    
+    If j > 0 Then
+        FName = Mid(Path, j + 1)
+    Else
+        FName = Path
+    End If
 
 End Function
 
@@ -2344,14 +2344,14 @@ End Function
 ' Return the filename only from the end of the path
 Public Function FNoExt(ByVal Path As String) As String
 
-Dim j As Integer
+    Dim j As Integer
 
-j = InStrRev(Path, ".")
-If j > 0 Then
-    FNoExt = Left(Path, j - 1)           'Everything BEFORE the last PERIOD
-Else
-    FNoExt = Path                        'The filename has no extension (unlikely)
-End If
+    j = InStrRev(Path, ".")
+    If j > 0 Then
+        FNoExt = Left(Path, j - 1)           'Everything BEFORE the last PERIOD
+    Else
+        FNoExt = Path                        'The filename has no extension (unlikely)
+    End If
 
 End Function
 
