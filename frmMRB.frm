@@ -1,16 +1,34 @@
 VERSION 5.00
 Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.ocx"
 Begin VB.Form frmMRB 
-   BorderStyle     =   1  'Fixed Single
    Caption         =   "Multi-ROM Builder"
    ClientHeight    =   8730
-   ClientLeft      =   240
-   ClientTop       =   390
-   ClientWidth     =   9870
+   ClientLeft      =   315
+   ClientTop       =   465
+   ClientWidth     =   9900
    LinkTopic       =   "Form1"
-   MaxButton       =   0   'False
    ScaleHeight     =   8730
-   ScaleWidth      =   9870
+   ScaleWidth      =   9900
+   Begin VB.CommandButton cmdPreview 
+      Caption         =   ">>"
+      Height          =   345
+      Left            =   9480
+      TabIndex        =   103
+      Top             =   720
+      Width           =   345
+   End
+   Begin VB.PictureBox Picture1 
+      AutoSize        =   -1  'True
+      BackColor       =   &H80000008&
+      Height          =   8535
+      Left            =   9960
+      ScaleHeight     =   8475
+      ScaleWidth      =   1995
+      TabIndex        =   102
+      Top             =   120
+      Visible         =   0   'False
+      Width           =   2055
+   End
    Begin VB.CheckBox cbMode16 
       Caption         =   "16 Bit Mode"
       Height          =   255
@@ -30,9 +48,9 @@ Begin VB.Form frmMRB
    Begin VB.CommandButton cmdNew 
       Caption         =   "&New Set"
       Height          =   345
-      Left            =   8760
+      Left            =   8040
       TabIndex        =   10
-      Top             =   750
+      Top             =   720
       Width           =   1065
    End
    Begin VB.CommandButton cmdClear 
@@ -102,7 +120,7 @@ Begin VB.Form frmMRB
       Left            =   1170
       TabIndex        =   0
       Top             =   720
-      Width           =   5205
+      Width           =   4605
    End
    Begin VB.CommandButton cmdDown 
       Caption         =   "Move &DOWN"
@@ -306,17 +324,17 @@ Begin VB.Form frmMRB
    Begin VB.CommandButton cmdSaveSet 
       Caption         =   "&Save Set"
       Height          =   345
-      Left            =   7620
+      Left            =   6960
       TabIndex        =   9
-      Top             =   750
+      Top             =   720
       Width           =   1065
    End
    Begin VB.CommandButton cmdLoadSet 
       Caption         =   "&Load Set"
       Height          =   345
-      Left            =   6480
+      Left            =   5880
       TabIndex        =   8
-      Top             =   750
+      Top             =   720
       Width           =   1065
    End
    Begin VB.CommandButton cmdAbout 
@@ -1473,7 +1491,22 @@ Dim GroupSize     As Integer        'Group size
 
 '---- Show the Program About Box
 Private Sub cmdAbout_Click()
-    MsgBox "Multi-ROM Builder, (C)2024 Steve J. Gray" & Cr & "Version 1.2 - Jun 1/2024"
+    MsgBox "Multi-ROM Builder, (C)2024-2025 Steve J. Gray" & Cr & "Version 1.3 - Jun 16/2025"
+End Sub
+
+Private Sub cmdPreview_Click()
+
+If frmMRB.WindowState <> 0 Then frmMRB.WindowState = 0
+
+If frmMRB.Width <> 10140 Then
+    frmMRB.Width = 10140
+    cmdPreview.Caption = ">>"
+Else
+    frmMRB.Width = 20000
+    cmdPreview.Caption = "<<"
+End If
+DoEvents
+
 End Sub
 
 '---- Start Here
@@ -1782,7 +1815,8 @@ End Sub
 
 '---- Select a specific Text Box
 Private Sub SelectN(ByVal Index As Integer)
-    'Debug.Print "SelectN"; Index
+    Dim Tmp As String, PFile As String, FFile As String
+    
     
     '-- Check for scrolling
     If (Index < 0) Then
@@ -1815,8 +1849,18 @@ Private Sub SelectN(ByVal Index As Integer)
     
     txtFN(EdIndex).Text = File(EdNum)                               'Edit the full path
     txtFN(EdIndex).SetFocus                                         'Activate the cursor
-
-    'Debug.Print "SelectN done"
+    
+    Tmp = FileBase(File(EdNum)): FFile = ""                         'Get base filename without extension. Clear found file string
+    PFile = Tmp & ".bmp": Debug.Print PFile: If Exists(PFile) = True Then FFile = PFile
+    PFile = Tmp & ".jpg": Debug.Print PFile: If Exists(PFile) = True Then FFile = PFile
+    PFile = Tmp & ".jpeg": Debug.Print PFile: If Exists(PFile) = True Then FFile = PFile
+    
+    Picture1.Visible = False
+    If FFile <> "" Then
+        Picture1.Picture = LoadPicture(FFile)
+        Picture1.Visible = True: DoEvents
+    End If
+    
 End Sub
 
 Private Sub txtFN_KeyDown(Index As Integer, KeyCode As Integer, Shift As Integer)
@@ -2057,7 +2101,7 @@ Private Sub cmdBuild_Click()
     Dim B As String * 1, LA As String * 2, PARM As String
     Dim FIO As Integer, FIO2 As Integer, FIO3 As Integer
     Dim FLen As Single, C As Single
-    Dim i As Integer, j As Integer, p As Integer
+    Dim i As Integer, j As Integer, P As Integer
     Dim Mode As Integer, Mode16 As Boolean, SS As Integer
     
 
@@ -2137,9 +2181,9 @@ Private Sub cmdBuild_Click()
             If Left(Filename, 1) = "%" Then
                 '-- Check CMD
                 Filename = UCase(Filename) & "  "
-                p = InStr(Filename, " ")
+                P = InStr(Filename, " ")
                 CMD = Mid(Filename, 2, 1)
-                PARM = Mid(Filename, p + 1)
+                PARM = Mid(Filename, P + 1)
                 
                 Select Case CMD
                     Case "F"
@@ -2434,4 +2478,13 @@ End Sub
 Private Sub cmdSplit_Click()
     SplitSlot
 End Sub
+
+'---- Return Filename without Extension (do not remove path if included)
+Public Function FileBase(ByVal Filename As String) As String
+    Dim P As Integer
+    
+    P = InStrRev(Filename, ".")
+    If P > 0 Then FileBase = Left(Filename, P - 1) Else FileBase = Filename
+    
+End Function
 

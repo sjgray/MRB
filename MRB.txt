@@ -1,5 +1,5 @@
-MRB: Multi-ROM Builder  (c)2024 Steve J. Gray
-======================  Version 1.2, May 31/2024
+MRB: Multi-ROM Builder  (c)2024-2025 Steve J. Gray
+======================  Version 1.3, Jun 16/2025
 
 This is a tool to build binary images from a set of individual files that can then be burned to ROM
 or EPROM etc, to be used in Multi-Carts, Bank-switched ROM and other similar uses. This can also be
@@ -106,6 +106,21 @@ two bytes for you. If the file is smaller than the slot size then automatic load
 not work and likely cause issues.
 
 The program will hide the full path of the file except while editing the filename.
+
+
+Companion Picture
+-----------------
+
+For binary files (such as fonts) with companion picture files you can click the ">>" button
+to expand the main window width. Then if you click on a slot it will display the companion
+JPG/JPEG, or BMP file. The companion file must have the same BASE name as the BINARY file. So for example if
+your file was called "myfont.bin" then the program will display either of the following files:
+
+     myfont.jpg
+     myfont.jpeg
+     myfont.bmp
+
+You can restore the window width by pressing the "<<" button. You can also maximize the main window now.
 
 
 Ordering Files
