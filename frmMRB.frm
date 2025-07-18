@@ -1491,7 +1491,7 @@ Dim GroupSize     As Integer        'Group size
 
 '---- Show the Program About Box
 Private Sub cmdAbout_Click()
-    MsgBox "Multi-ROM Builder, (C)2024-2025 Steve J. Gray" & Cr & "Version 1.3 - Jun 16/2025"
+    MsgBox "Multi-ROM Builder, (C)2024-2025 Steve J. Gray" & Cr & "Version 1.4 - Jul 18/2025"
 End Sub
 
 Private Sub cmdPreview_Click()
@@ -1771,7 +1771,7 @@ End Sub
 
 '---- UpdateEdit
 ' When a SLOT is selected and being edited, any operation on that SLOT by other
-' GUI elements must ensure that the SLOT data is update BEFORE it is operated on.
+' GUI elements must ensure that the SLOT data is updated BEFORE it is operated on.
 ' If the filename starts with "%" then it is a command, so it is copied to the BASE name.
 Private Sub UpdateEdit()
     If EdNum < 0 Then
@@ -1782,7 +1782,8 @@ Private Sub UpdateEdit()
     'Debug.Print "UpdateEdit"; EdNum
     
     File(EdNum) = txtFN(EdIndex).Text                               'Restore updated filename
-    If Left(File(Edmum), 1) = "%" Then
+    If Left(File(EdNum), 1) = "%" Then
+        'debug.print "Update: " & File(EdNum)
         Base(EdNum) = File(EdNum)                                   'Copy CMD to BASE name
     Else
         Base(EdNum) = FName(File(EdNum))                            'Update BASE name from current filename
@@ -1892,6 +1893,7 @@ End Sub
 Private Sub txtFN_KeyPress(Index As Integer, KeyAscii As Integer)
     Select Case KeyAscii
         Case 13
+            UpdateEdit
             If (Index < 15) And (Index < SlotSize) Then
                 txtFN(Index + 1).SetFocus
                 KeyAscii = 0                                'Zero to prevent beep
