@@ -1491,7 +1491,7 @@ Dim GroupSize     As Integer        'Group size
 
 '---- Show the Program About Box
 Private Sub cmdAbout_Click()
-    MsgBox "Multi-ROM Builder, (C)2024-2025 Steve J. Gray" & Cr & "Version 1.4 - Jul 18/2025"
+    MsgBox "Multi-ROM Builder, (C)2024-2025 Steve J. Gray" & Cr & "Version 1.5 - Aug 11/2025"
 End Sub
 
 Private Sub cmdPreview_Click()
@@ -1962,8 +1962,11 @@ End Sub
 Private Sub LoadSet()
     Dim Filename As String
     Dim FIO As Integer, i As Integer, Tmp As String
+    Dim TS As Integer, SS As Integer
     
     On Local Error Resume Next                              'Allow incomplete set file
+    
+    TS = -1: SS = -1                                        'Preset to invalid values
     
     Filename = FileOpenSave("", 0, 1, "Load Set")
     If Exists(Filename) = True Then
@@ -1975,15 +1978,26 @@ Private Sub LoadSet()
         Do While Not EOF(FIO)
             Tmp = ""
             Line Input #FIO, Tmp                            'Path+Filename
-            File(i) = Tmp                                   'Filename including path
-            Base(i) = FName(Tmp)                            'Base filename - no path (for display)
-            FileInfo(i) = "?"                               'File Size string
-            FileSize(i) = 0                                 'File Size
             
+            If Left(Tmp, 3) = "TS=" Then
+               TS = Val(Mid(Tmp, 4))
+            ElseIf Left(Tmp, 3) = "SS=" Then
+                SS = Val(Mid(Tmp, 4))
+            Else
+                File(i) = Tmp                                   'Filename including path
+                Base(i) = FName(Tmp)                            'Base filename - no path (for display)
+                FileInfo(i) = "?"                               'File Size string
+                FileSize(i) = 0                                 'File Size
+            End If
             i = i + 1: If i > 255 Then Exit Do
         Loop
         
         Close FIO
+        
+        If TS >= 0 Then cboTargetSize.ListIndex = TS
+        If SS >= 0 Then cboNumSlots.ListIndex = SS
+        If TS >= 0 Or SS >= 0 Then SetSlotSize
+        
         SelectN 0                                           'Select first file slot
     End If
     
@@ -1998,6 +2012,10 @@ Private Sub SaveSet()
         FIO = FreeFile
         Open Filename For Output As FIO
         Print #FIO, txtDesc.Text                            'Set Description
+        
+        Print #FIO, "TS="; cboTargetSize.ListIndex
+        Print #FIO, "SS="; cboNumSlots.ListIndex
+        
         For i = 0 To MaxSlot
             Print #FIO, File(i)                             'Path+Filename
         Next i

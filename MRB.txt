@@ -1,5 +1,5 @@
 MRB: Multi-ROM Builder  (c)2024-2025 Steve J. Gray
-======================  Version 1.3, Jun 16/2025
+======================  Version 1.5, Aug 11/2025
 
 This is a tool to build binary images from a set of individual files that can then be burned to ROM
 or EPROM etc, to be used in Multi-Carts, Bank-switched ROM and other similar uses. This can also be
@@ -141,10 +141,12 @@ Working With Sets
 Enter a Set Description at the top of the window. You might want to include the Target size and number of
 slots in the description. The number of slots selected determines your SET size. When all your slots are
 specified you can click "Save Set" to save them to a TXT file. Only the correct number of slots will be
-saved, along with the description.
+saved, along with the description. Version 1.4 will also save the Target and Slots info.
 
-Click "Load Set" to load a saved set. This will load all slots specified in the SET file (up to 256 slots)
-but does not change the currently select number of slots or target size. Make sure these are set. Any
+Click "Load Set" to load a saved set. This will load all slots specified in the SET file (up to 256 slots).
+If the set was saved with MRB Version 1.4 or higher it will automatically set the Target Size and Number
+of Slots for you. Files savd with an earlier version will not change the currently select number of slots
+or target size. Make sure these are set. Re-save the set to update the saved file to the new version. Any
 extra slots loaded will be ignored but will remain in the program, however they will be lost when the
 SET is saved.
 
