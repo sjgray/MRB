@@ -9,12 +9,21 @@ Begin VB.Form frmMRB
    LinkTopic       =   "Form1"
    ScaleHeight     =   8730
    ScaleWidth      =   9900
+   Begin VB.CommandButton cmdSplitEXT 
+      Caption         =   "Split SET"
+      Height          =   405
+      Left            =   7260
+      TabIndex        =   104
+      ToolTipText     =   "Spit  using filenames from each slot"
+      Top             =   8280
+      Width           =   825
+   End
    Begin VB.CommandButton cmdPreview 
       Caption         =   ">>"
-      Height          =   345
-      Left            =   9480
+      Height          =   525
+      Left            =   9540
       TabIndex        =   103
-      Top             =   720
+      Top             =   60
       Width           =   345
    End
    Begin VB.PictureBox Picture1 
@@ -32,47 +41,48 @@ Begin VB.Form frmMRB
    Begin VB.CheckBox cbMode16 
       Caption         =   "16 Bit Mode"
       Height          =   255
-      Left            =   8400
+      Left            =   8040
       TabIndex        =   101
       Top             =   1440
       Width           =   1185
    End
    Begin VB.CommandButton cmdSplit 
-      Caption         =   "S&plit"
+      Caption         =   "S&plit BIN"
       Height          =   405
-      Left            =   6630
+      Left            =   6390
       TabIndex        =   100
+      ToolTipText     =   "Spit  BIN in Slot#1 outputting numbered files"
       Top             =   8280
-      Width           =   1305
+      Width           =   825
    End
    Begin VB.CommandButton cmdNew 
       Caption         =   "&New Set"
-      Height          =   345
-      Left            =   8040
+      Height          =   525
+      Left            =   60
       TabIndex        =   10
-      Top             =   720
+      Top             =   60
       Width           =   1065
    End
    Begin VB.CommandButton cmdClear 
       Caption         =   "&Clear"
       Height          =   405
-      Left            =   5670
+      Left            =   5370
       TabIndex        =   16
       Top             =   8280
-      Width           =   765
+      Width           =   645
    End
    Begin VB.CheckBox cbAllowEmpty 
       Caption         =   "Allow empty slots"
       Height          =   255
-      Left            =   6510
+      Left            =   8040
       TabIndex        =   5
-      Top             =   1410
+      Top             =   1200
       Width           =   1545
    End
    Begin VB.ComboBox cboGroup 
       Height          =   315
       ItemData        =   "frmMRB.frx":0000
-      Left            =   5310
+      Left            =   6870
       List            =   "frmMRB.frx":0002
       Style           =   2  'Dropdown List
       TabIndex        =   3
@@ -81,12 +91,12 @@ Begin VB.Form frmMRB
    End
    Begin VB.TextBox txtPad 
       Height          =   285
-      Left            =   9300
+      Left            =   6900
       MaxLength       =   3
       TabIndex        =   6
       Text            =   "0"
       ToolTipText     =   "Enter a decimal value"
-      Top             =   1110
+      Top             =   1440
       Width           =   465
    End
    Begin VB.VScrollBar VScroll1 
@@ -100,7 +110,7 @@ Begin VB.Form frmMRB
    Begin VB.ComboBox cboNumSlots 
       Height          =   315
       ItemData        =   "frmMRB.frx":0004
-      Left            =   3360
+      Left            =   4620
       List            =   "frmMRB.frx":0006
       Style           =   2  'Dropdown List
       TabIndex        =   2
@@ -110,22 +120,22 @@ Begin VB.Form frmMRB
    Begin VB.CheckBox cbAllowShort 
       Caption         =   "Allow short files"
       Height          =   255
-      Left            =   6510
+      Left            =   8040
       TabIndex        =   4
-      Top             =   1140
-      Width           =   1545
+      Top             =   900
+      Width           =   1425
    End
    Begin VB.TextBox txtDesc 
       Height          =   315
-      Left            =   1170
+      Left            =   2340
       TabIndex        =   0
       Top             =   720
-      Width           =   4605
+      Width           =   5565
    End
    Begin VB.CommandButton cmdDown 
       Caption         =   "Move &DOWN"
       Height          =   405
-      Left            =   2790
+      Left            =   2730
       TabIndex        =   13
       Top             =   8280
       Width           =   1125
@@ -133,7 +143,7 @@ Begin VB.Form frmMRB
    Begin VB.CommandButton cmdUp 
       Caption         =   "Move &UP"
       Height          =   405
-      Left            =   1650
+      Left            =   1620
       TabIndex        =   12
       Top             =   8280
       Width           =   1095
@@ -141,10 +151,10 @@ Begin VB.Form frmMRB
    Begin VB.CommandButton cmdIns 
       Caption         =   "&Insert"
       Height          =   405
-      Left            =   4860
+      Left            =   4680
       TabIndex        =   15
       Top             =   8280
-      Width           =   765
+      Width           =   645
    End
    Begin MSComDlg.CommonDialog CommonDialog 
       Left            =   7920
@@ -299,10 +309,10 @@ Begin VB.Form frmMRB
    Begin VB.CommandButton cmdDel 
       Caption         =   "D&elete"
       Height          =   405
-      Left            =   4050
+      Left            =   3930
       TabIndex        =   14
       Top             =   8280
-      Width           =   765
+      Width           =   705
    End
    Begin VB.CommandButton cmdAdd 
       Caption         =   "Add &File..."
@@ -324,31 +334,31 @@ Begin VB.Form frmMRB
    Begin VB.CommandButton cmdSaveSet 
       Caption         =   "&Save Set"
       Height          =   345
-      Left            =   6960
+      Left            =   60
       TabIndex        =   9
-      Top             =   720
+      Top             =   1140
       Width           =   1065
    End
    Begin VB.CommandButton cmdLoadSet 
       Caption         =   "&Load Set"
       Height          =   345
-      Left            =   5880
+      Left            =   60
       TabIndex        =   8
       Top             =   720
       Width           =   1065
    End
    Begin VB.CommandButton cmdAbout 
       Caption         =   "&About"
-      Height          =   645
-      Left            =   8760
+      Height          =   555
+      Left            =   8040
       TabIndex        =   7
       Top             =   60
-      Width           =   1065
+      Width           =   1425
    End
    Begin VB.ComboBox cboTargetSize 
       Height          =   315
       ItemData        =   "frmMRB.frx":0008
-      Left            =   1170
+      Left            =   2310
       List            =   "frmMRB.frx":000A
       Style           =   2  'Dropdown List
       TabIndex        =   1
@@ -386,7 +396,7 @@ Begin VB.Form frmMRB
          Strikethrough   =   0   'False
       EndProperty
       Height          =   300
-      Left            =   2730
+      Left            =   2340
       TabIndex        =   98
       Top             =   1440
       Width           =   1005
@@ -404,7 +414,7 @@ Begin VB.Form frmMRB
          Strikethrough   =   0   'False
       EndProperty
       Height          =   300
-      Left            =   4530
+      Left            =   6090
       TabIndex        =   97
       Top             =   1080
       Width           =   735
@@ -432,9 +442,9 @@ Begin VB.Form frmMRB
       AutoSize        =   -1  'True
       Caption         =   "Pad (0-255):"
       Height          =   195
-      Left            =   8400
+      Left            =   6000
       TabIndex        =   95
-      Top             =   1170
+      Top             =   1500
       Width           =   870
    End
    Begin VB.Shape Shape4 
@@ -719,10 +729,10 @@ Begin VB.Form frmMRB
          Strikethrough   =   0   'False
       EndProperty
       Height          =   285
-      Left            =   3870
+      Left            =   3420
       TabIndex        =   71
       Top             =   1440
-      Width           =   2475
+      Width           =   2055
    End
    Begin VB.Label Label7 
       AutoSize        =   -1  'True
@@ -737,7 +747,7 @@ Begin VB.Form frmMRB
          Strikethrough   =   0   'False
       EndProperty
       Height          =   300
-      Left            =   2730
+      Left            =   3990
       TabIndex        =   70
       Top             =   1080
       Width           =   600
@@ -755,7 +765,7 @@ Begin VB.Form frmMRB
          Strikethrough   =   0   'False
       EndProperty
       Height          =   300
-      Left            =   360
+      Left            =   1560
       TabIndex        =   69
       Top             =   1080
       Width           =   750
@@ -1120,7 +1130,7 @@ Begin VB.Form frmMRB
          Strikethrough   =   0   'False
       EndProperty
       Height          =   300
-      Left            =   60
+      Left            =   1260
       TabIndex        =   51
       Top             =   720
       Width           =   1050
@@ -1433,10 +1443,10 @@ Begin VB.Form frmMRB
       BackColor       =   &H00C0FFFF&
       Caption         =   $"frmMRB.frx":000C
       Height          =   615
-      Left            =   60
+      Left            =   1260
       TabIndex        =   34
-      Top             =   60
-      Width           =   8595
+      Top             =   0
+      Width           =   6675
    End
    Begin VB.Label Label5 
       AutoSize        =   -1  'True
@@ -1454,7 +1464,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-' MRB - Multi-ROM Builder, (C) 2024 Steve J. Gray
+' MRB - Multi-ROM Builder, (C) 2024-2026 Steve J. Gray
 ' ===
 ' This is a utility to assemble binary files to be written to ROMS/EPROMS etc of various sizes that
 ' can be specified, as well as how many "slots" it will contain. For each slot you can specify a
@@ -1463,6 +1473,10 @@ Attribute VB_Exposed = False
 ' colour. Slots can be re-arranged, deleted, inserted or cleared etc. Drag and Drop of files into
 ' slots is supported. You can specify if short files or empty slots are accepted. Empty slots can
 ' be filled with a specified byte value.
+
+Dim SetFile       As String         'Remember Set Filename
+Dim SetName       As String         'Filename of Set file without .TXT
+Dim SetPath       As String         'Path to Set file
 
 Dim SelNum        As Integer        'Selected Set number (0-255)
 Dim SelIndex      As Integer        'Selected Index      (0-15)
@@ -1473,8 +1487,9 @@ Dim TopNum        As Integer        'Top Slot Number     (0-255)
 Dim TargetSize    As Single         'Binary size
 Dim SlotSize      As Single         'Size of each slot (bytes)
 Dim NumSlots      As Integer        'Number of slots (2-64)
-
 Dim MaxSlot       As Integer        'Max Slot number
+
+Dim SplitMode     As Boolean        'False=BIN in Slot1-Numbered Names, True=Names from Set filenames
 
 Dim Cr            As String         'Carriage Return
 Dim Ready         As Boolean        'Flag to indicate init complete
@@ -1491,7 +1506,7 @@ Dim GroupSize     As Integer        'Group size
 
 '---- Show the Program About Box
 Private Sub cmdAbout_Click()
-    MsgBox "Multi-ROM Builder, (C)2024-2025 Steve J. Gray" & Cr & "Version 1.5 - Aug 11/2025"
+    MsgBox "Multi-ROM Builder, (C)2024-2026 Steve J. Gray" & Cr & "Version 1.6 - Apr 28/2026"
 End Sub
 
 Private Sub cmdPreview_Click()
@@ -1507,6 +1522,11 @@ Else
 End If
 DoEvents
 
+End Sub
+
+Private Sub cmdSplitEXT_Click()
+    SplitMode = True
+    SplitIt
 End Sub
 
 '---- Start Here
@@ -1700,7 +1720,7 @@ Private Sub DrawSlots()
 End Sub
 
 
-Private Sub SplitSlot()
+Private Sub SplitIt()
 
     Dim Filename As String, OutFile As String, OutFile2 As String
     Dim FIO As Integer, FIO2 As Integer, FIO3 As Integer
@@ -1712,30 +1732,52 @@ Private Sub SplitSlot()
     Mode16 = False: SS = 1
     If cbMode16.Value = vbChecked Then Mode16 = True: SS = 2
     
-    Filename = File(0)
+    If SplitMode = False Then
+        Filename = File(0)  ' BIN file is in SLOT #0
     
-    If Filename = "" Or Left(Filename, 1) = "%" Then MsgBox "Please enter a valid filename in SLOT 0!": Exit Sub
-    If Exists(Filename) = False Then MsgBox "The file does not exist!": Exit Sub
-    If FileLen(Filename) <> TargetSize Then MsgBox "The filesize does not match Target size (" & Str(TargetSize) & " bytes)!": Exit Sub
+        If Filename = "" Or Left(Filename, 1) = "%" Then MsgBox "Please enter a valid filename in SLOT 0!": Exit Sub
+        If Exists(Filename) = False Then MsgBox "The file in SLOT 0 does not exist! " & Filename: Exit Sub
+        If FileLen(Filename) <> TargetSize Then MsgBox "The filesize does not match Target size (" & Str(TargetSize) & " bytes)!": Exit Sub
     
-    Temp = "This will split the FILE in SLOT 0." & Cr & "Make sure the ROM size and SlotSize are correct!"
+        Temp = "This will split the FILE in SLOT 0." & Cr & "Make sure the ROM size and SlotSize are correct!"
+        If MsgBox("Split SLOT 0 file?", vbOKCancel, "Confirm!") = vbCancel Then Exit Sub
+        
+        Temp = FileBase(Filename)                                         'SplitFlag=False - The file path without extension
+        SetName = FileBase(Filename)
+    Else
+        If SetFile = "" Then MsgBox "No Set is loaded!": Exit Sub
+        
+        Filename = SetFile
+        If Exists(Filename) = False Then MsgBox "There is no matching BIN!": Exit Sub
+        If MsgBox("Split existing BIN file with the same SET NAME?", vbOKCancel, "Confirm!") = vbCancel Then Exit Sub
+        
+        Temp = SetPath                                         'SplitFlag=False - The file path without filename.ext
+    End If
+    
     If Mode16 = True Then Temp = Temp & Cr & "16-bit mode ENABLED!:" & Cr & "Source byte pairs are split into EVEN/ODD output files."
-    
-    If MsgBox(Temp, vbOKCancel, "Split SLOT 0 file.") = vbCancel Then Exit Sub
-    
-    Temp = FNoExt(Filename)                                         'The file path without extension
     
     FIO = FreeFile
     Open Filename For Binary As FIO                                 'Open the source file to READ
     
     For i = 0 To MaxSlot Step SS                                    'Loop for each slot
-        OutFile = Temp & "." & Format(i, "000")                      'Build the output filename
+        If SplitMode = False Then
+            OutFile = Temp & "-" & Format(i, "000") & ".bin"        'Numbered output filename
+        Else
+            OutFile = Temp & "\" & FName(File(i))                   'Filename from slot with path removed/replaced by SET location
+        End If
+        
+        If (SplitMode = True And OutFile = "") Then OutFile = "Slot" & Str(i) & ".bin" 'No name so generic numbered file
+        
         FIO2 = FreeFile
         Open OutFile For Output As FIO2                             'Open destination file to WRITE
-        File(i) = OutFile                                           'Filename with path
-        Base(i) = FName(OutFile)                                    'Filename only
-        FileSize(i) = SlotSize                                      'Filesize same as slotsize
-        FileInfo(i) = Str(SlotSize)                                 'FileInfo
+        
+        If SplitMode = False Then
+            ' We build a new record for this slot based on new output location
+            File(i) = OutFile                                           'Filename with path
+            Base(i) = FName(OutFile)                                    'Filename only
+            FileSize(i) = SlotSize                                      'Filesize same as slotsize
+            FileInfo(i) = Str(SlotSize)                                 'FileInfo
+        End If
         
         If Mode16 = True Then
             OutFile2 = Temp & "." & Format(i + 1, "000")            'Build the output filename
@@ -1940,6 +1982,10 @@ Private Sub NewSet()
     EdNum = -1                                              'Edit SET number (-1 means none set)
     EdIndex = 0                                             'Edit visible SLOT
     
+    SetFile = ""                                            'Clear SET variables
+    SetName = ""
+    SetPath = ""
+    
     txtDesc.Text = "Multi-ROM Set"
     DoEvents
 End Sub
@@ -1969,9 +2015,14 @@ Private Sub LoadSet()
     TS = -1: SS = -1                                        'Preset to invalid values
     
     Filename = FileOpenSave("", 0, 1, "Load Set")
+    
     If Exists(Filename) = True Then
     
         FIO = FreeFile
+        SetFile = FileBase(Filename) & ".bin": Debug.Print "SetFile="; SetFile
+        SetPath = FilePath(Filename): Debug.Print "SetPath="; SetPath
+        
+        
         Open Filename For Input As FIO
         i = 0
         Line Input #FIO, Tmp: txtDesc.Text = Tmp            'Set Description
@@ -2020,6 +2071,50 @@ Private Sub SaveSet()
             Print #FIO, File(i)                             'Path+Filename
         Next i
         Close FIO
+    End If
+    
+End Sub
+
+Private Sub LoadSplit()
+    Dim Filename As String
+    Dim FIO As Integer, i As Integer, Tmp As String
+    Dim TS As Integer, SS As Integer
+    
+    On Local Error Resume Next                              'Allow incomplete set file
+    
+    TS = -1: SS = -1                                        'Preset to invalid values
+    
+    Filename = FileOpenSave("", 0, 1, "Load Split PAIR")
+    If Exists(Filename) = True Then
+    
+        FIO = FreeFile
+        Open Filename For Input As FIO
+        i = 0
+        Line Input #FIO, Tmp: txtDesc.Text = Tmp            'Set Description
+        Do While Not EOF(FIO)
+            Tmp = ""
+            Line Input #FIO, Tmp                            'Path+Filename
+            
+            If Left(Tmp, 3) = "TS=" Then
+               TS = Val(Mid(Tmp, 4))
+            ElseIf Left(Tmp, 3) = "SS=" Then
+                SS = Val(Mid(Tmp, 4))
+            Else
+                File(i) = Tmp                                   'Filename including path
+                Base(i) = FName(Tmp)                            'Base filename - no path (for display)
+                FileInfo(i) = "?"                               'File Size string
+                FileSize(i) = 0                                 'File Size
+            End If
+            i = i + 1: If i > 255 Then Exit Do
+        Loop
+        
+        Close FIO
+        
+        If TS >= 0 Then cboTargetSize.ListIndex = TS
+        If SS >= 0 Then cboNumSlots.ListIndex = SS
+        If TS >= 0 Or SS >= 0 Then SetSlotSize
+        
+        SelectN 0                                           'Select first file slot
     End If
     
 End Sub
@@ -2287,27 +2382,6 @@ WritePadding:
 
 End Sub
 
-'===========
-' FUNCTIONS
-'===========
-
-'---- Exists
-' Check if a File Exists - Returns TRUE if it does
-Private Function Exists(ByVal Filename As String) As Boolean
-    Dim FIO As Integer
-    
-    On Local Error GoTo NoFile              'Open will fail if file does not exist
-    FIO = FreeFile
-    Open Filename For Input As FIO          'If this works then the file exists
-    Close FIO
-    Exists = True                           'Return TRUE
-    Exit Function
-
-NoFile:
-    Close FIO
-    Exists = False                          'Return FALSE
-    
-End Function
 
 '---- Drag and Drop
 ' Processes multiple dropped files. Drops to the currently selected slot and can load
@@ -2344,80 +2418,6 @@ Private Sub txtFN_OLEDragOver(Index As Integer, Data As DataObject, Effect As Lo
     If Data.GetFormat(vbCFFiles) Then Effect = 1 Else Effect = 0
 End Sub
 
-'---- Common File Open or Save Dialog
-' You can specify a default filename, a File Filter list index (0-1), and Window Title
-' MODE: 0=Open, 1=Save
-' Returns a filename with full path. If cancelled will return null string
-Private Function FileOpenSave(ByVal DefFile As String, ByVal Mode As Integer, FiltSet As Integer, DTitle As String) As String
-    Dim Filename As String
-    
-    CommonDialog.CancelError = True
-    On Local Error GoTo NoFile
-        
-    CommonDialog.DialogTitle = DTitle
-    CommonDialog.Flags = cdlOFNHideReadOnly
-    CommonDialog.Filename = DefFile
-    
-    Select Case FiltSet
-        Case 0: CommonDialog.Filter = "All files (*.*)|*.*"
-        Case 1: CommonDialog.Filter = "Text Files (*.TXT)|*.TXT"
-        Case 2: CommonDialog.Filter = "ROM Files (*.bin, *.rom)|*.bin;*.rom"
-    End Select
-    
-    If Mode = 0 Then CommonDialog.ShowOpen Else CommonDialog.ShowSave   'MODE: 0=Open, 1=Save
-        
-    If CommonDialog.Filename = "" Then Exit Function
-    
-    FileOpenSave = CommonDialog.Filename
-    Exit Function
-NoFile:
-
-End Function
-
-'---- Overwrite
-' Checks for file and prompts to Overwrite if necessary
-' Returns TRUE if file does NOT exist, or it EXISTS and user says YES.
-' Returns FALSE if file EXISTS but user says NO.
-Public Function Overwrite(ByVal Filename As String) As Boolean
-    
-    Overwrite = True    'assume ok to replace
-    
-    If Exists(Filename) = True Then
-        If MsgBox("The file '" & Filename & "' already exists!" & Cr & "Replace it?", vbYesNo, "Overwrite File") = vbNo Then Overwrite = False
-    End If
-End Function
-
-'---- FName
-' Return the filename only from the end of the path
-Public Function FName(ByVal Path As String) As String
-
-    Dim j As Integer
-
-    j = InStrRev(Path, "\")
-    
-    If j > 0 Then
-        FName = Mid(Path, j + 1)
-    Else
-        FName = Path
-    End If
-
-End Function
-
-
-'---- FName
-' Return the filename only from the end of the path
-Public Function FNoExt(ByVal Path As String) As String
-
-    Dim j As Integer
-
-    j = InStrRev(Path, ".")
-    If j > 0 Then
-        FNoExt = Left(Path, j - 1)           'Everything BEFORE the last PERIOD
-    Else
-        FNoExt = Path                        'The filename has no extension (unlikely)
-    End If
-
-End Function
 
 
 '==== BUTTON/DROPDOWN HANDLING
@@ -2496,15 +2496,128 @@ Private Sub cmdClear_Click()
 End Sub
 
 Private Sub cmdSplit_Click()
-    SplitSlot
+    SplitMode = False
+    SplitIt
 End Sub
 
-'---- Return Filename without Extension (do not remove path if included)
+
+'====================
+' FILE/PATH FUNCTIONS
+'====================
+
+'---- Common File Open or Save Dialog
+' You can specify a default filename, a File Filter list index (0-1), and Window Title
+' MODE: 0=Open, 1=Save
+' Returns a filename with full path. If cancelled will return null string
+Private Function FileOpenSave(ByVal DefFile As String, ByVal Mode As Integer, FiltSet As Integer, DTitle As String) As String
+    Dim Filename As String
+    
+    CommonDialog.CancelError = True
+    On Local Error GoTo NoFile
+        
+    CommonDialog.DialogTitle = DTitle
+    CommonDialog.Flags = cdlOFNHideReadOnly
+    CommonDialog.Filename = DefFile
+    
+    Select Case FiltSet
+        Case 0: CommonDialog.Filter = "All files (*.*)|*.*"
+        Case 1: CommonDialog.Filter = "Text Files (*.TXT)|*.TXT"
+        Case 2: CommonDialog.Filter = "ROM Files (*.bin, *.rom)|*.bin;*.rom"
+    End Select
+    
+    If Mode = 0 Then CommonDialog.ShowOpen Else CommonDialog.ShowSave   'MODE: 0=Open, 1=Save
+        
+    If CommonDialog.Filename = "" Then Exit Function
+    
+    FileOpenSave = CommonDialog.Filename
+    Exit Function
+NoFile:
+
+End Function
+
+'---- Exists
+' Check if a File Exists - Returns TRUE if it does
+Private Function Exists(ByVal Filename As String) As Boolean
+    Dim FIO As Integer
+    
+    On Local Error GoTo NoFile              'Open will fail if file does not exist
+    FIO = FreeFile
+    Open Filename For Input As FIO          'If this works then the file exists
+    Close FIO
+    Exists = True                           'Return TRUE
+    Exit Function
+
+NoFile:
+    Close FIO
+    Exists = False                          'Return FALSE
+    
+End Function
+
+'---- Overwrite
+' Checks for file and prompts to Overwrite if necessary
+' Returns TRUE if file does NOT exist, or it EXISTS and user says YES.
+' Returns FALSE if file EXISTS but user says NO.
+Public Function Overwrite(ByVal Filename As String) As Boolean
+    
+    Overwrite = True    'assume ok to replace
+    
+    If Exists(Filename) = True Then
+        If MsgBox("The file '" & Filename & "' already exists!" & Cr & "Replace it?", vbYesNo, "Overwrite File") = vbNo Then Overwrite = False
+    End If
+    
+End Function
+
+'---- FileBase - Returns filename without extension
+' RETURNS: DRIVE:\PATH\FILENAME --without .EXT
+
 Public Function FileBase(ByVal Filename As String) As String
     Dim P As Integer
     
     P = InStrRev(Filename, ".")
     If P > 0 Then FileBase = Left(Filename, P - 1) Else FileBase = Filename
     
+End Function
+
+'---- FilePath - Returns the File Path
+' RETURNS: DRIVE:\PATH\ - without FILENAME.EXT
+
+Public Function FilePath(ByVal Filename As String) As String
+    Dim P As Integer
+    
+    P = InStrRev(Filename, "\")
+    If P > 0 Then FilePath = Left(Filename, P) Else FilePath = ""
+    
+End Function
+
+'---- FName - Returns the filename and extension from the end of the path
+' RETURNS: FILE.EXT -- without DRIVE:\PATH\
+
+Public Function FName(ByVal Path As String) As String
+
+    Dim j As Integer
+
+    j = InStrRev(Path, "\") 'Find the last backslash
+    
+    If j > 0 Then
+        FName = Mid(Path, j + 1)
+    Else
+        FName = Path
+    End If
+
+End Function
+
+
+'---- FNoExt - Returns the filename only from the end of the path (no extension)
+Public Function FNoExt(ByVal Path As String) As String
+
+    Dim j As Integer
+
+    j = InStrRev(Path, ".")
+    If j > 0 Then
+        FNoExt = Left(Path, j - 1)           'Everything BEFORE the last PERIOD
+    Else
+        FNoExt = Path                        'The filename has no extension (unlikely)
+    End If
+
 End Function
 

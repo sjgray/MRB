@@ -1,5 +1,5 @@
-MRB: Multi-ROM Builder  (c)2024-2025 Steve J. Gray
-======================  Version 1.4, Jul 18, 2025
+MRB: Multi-ROM Builder  (c)2024-2026 Steve J. Gray
+======================  Version 1.6, Apr 28, 2026
 
 This is a tool to build binary images from multiple source binaries, for use in ROM
 switchers, bank-switched ROM adapters etc.
@@ -16,7 +16,7 @@ Features
 * Options for allowing short files or empty slots.
 * Cursor up/down to select slots.
 * Can set the padding byte value for empty slots and/or short files.
-* Can split a large file into smaller slot-sized files.
+* Can split a SET BIN file into individual slot-sized files.
 * Supports 16-bit mode. Uses file pairs - Even and Odd
 * Can display companion BMP or JPG pictures
   (pictures must be named with the same "base" name but with BMP or JPG extension.)
@@ -33,6 +33,7 @@ V1.1 2024-05-27 Added Split function.
 V1.2 2024-06-01 Add 16-bit mode. New Github repository: https://github.com/sjgray/MRB
 V1.3 2025-06-16 Add BMP/JPG picture preview
 V1.4 2025-07-18 Fix for % command not accepted
+V1.6 2026-04-28 Add new SPLIT option that uses the SET file to extract actual filenames
 
 If you have comments or suggestions please contact me at:
 

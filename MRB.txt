@@ -3,29 +3,21 @@ MRB: Multi-ROM Builder  (c)2024-2025 Steve J. Gray
 
 This is a tool to build binary images from a set of individual files that can then be burned to ROM
 or EPROM etc, to be used in Multi-Carts, Bank-switched ROM and other similar uses. This can also be
-used to take a binary and split it back up into its individual files again. I have several projects
-that this can be used for, such as:
+used to take a binary and split it back up into its individual files again. The Target ROM can be up
+to 2MB in size and can support up to 256 slots.
 
-* Multi-EditorROM
-* Multi-EditorROM+
-* Multi-EditorROM with 40/80 column switcher
+I have several projects that this can be used for, such as:
+
+* Multi-EditorROM, Multi-EditorROM+, and Multi-EditorROM with 40/80 column switcher
 * PET/CBM Multi-ROM
-* CBM-II ROM Cart
+* CBM-II ROM Cart and RAM/ROM Cart
+* 8296 40/80 column switcher
+* C64 VDC+MultiCart
 * C64SG
 * SuperColourPET
 * CLCD Recreation
 
-The above projects all allow you to have multiple ROM/EPROM sets in one. Sets can be selected either
-via dip switch or software control. The Mult-EditorROM board allow you to have 16 Editor, Firmware,
-or Character ROMs in one EPROM selectable via DIP switch. Editor ROMs can be either 2K or 4K in size so
-padding is necessary. The CBM-II ROM Cart allows you to select 1 SET of 3 cartridge images plus one
-additional image, from a total of 8 different sets. The C64SG board supports 4 different sets of
-firmware ROMs (BASIC/KERNAL/Character) via dipswitch.
-
-This is a generic tool that can be used for much more than the above. The Target ROM can be up to
-2MB in size and can support up to 256 slots. Maybe you have a C64 ROM cart full of games. This tool
-can let you add different game roms in specific slots then generate a binary file that can be burned
-to EPROM for the ROM socket on the cartridge board.
+For more information, visit my webpages or GitHub for the projects above.
 
 
 About
@@ -34,7 +26,7 @@ About
 Click "About" to see the copyright, date and version# of the program.
 
 This program was written in VB6, and requires the proper VB6 runtimes for Windows. Most versions of
-Windows upto and including Windows 11, already include the VB runtimes.
+Windows up to and including Windows 11, already include the VB runtimes.
 
 
 Setting Target
@@ -159,13 +151,13 @@ the specific BYTE value.
 ---------------------
 
 This utility can use 8-bit or 16-bit files. The default is 8-bit mode for normal files. In this mode
-each file is independant and are treated as "whole". No conversion is done. In this mode you can
+each file is independent and are treated as "whole". No conversion is done. In this mode you can
 process 8 or 16 bit files if you do not need to convert them. When 16-bit mode is enabled it allows
 you to convert 16-bit files into two 8-bit files. What this does is read one 16-bit Word and write
 to two 8-bit files (Even/Odd). Similarly you can also re-assemble two 8-bit files into one 16-bit file.
 
 Note:	There are some limitations in 16-bit mode. You can not mix files with commands in the same
-	pair. When usimg padding only the first slot of a pair is used. As well, you should not use
+	pair. When using padding only the first slot of a pair is used. As well, you should not use
 	two different-length files for combining.
 
 
@@ -196,17 +188,36 @@ and emulator etc).
 Splitting Files
 ---------------
 
-You can also split a large file into individual files again. Clear the SET, then load the file into
-SLOT 0. You should see the file size on the right. This should be a power of two. Adjust the Target
-to match the filesize, then select the number of slots that are included in the file. For example,
-if you had a multicart that said "32-in-1 Games" you might assume there are 32 slots (ie: a power of
-two). Or, if you have a rom switcher with 4 switches you likely have 16 slots (2 to the power of 4).
+You can also split a large file into individual files again. There are two methods:
 
-Click the SPLIT button. It will display a message and ask you to confirm. It will write out the
-files with a numbered extension like ".000", ".001" etc up to the number of slots. It will put
-the filenames into the slots for you. Give the SET a new name, then save the SET. You can now
-re-order the files or replace slots with new files and create an entirely new binary.
+1) Using a single ROM or BIN file
+2) Using a SET file.
 
+** Method 1 - Single file
+
+ Clear the SET, then load the file into SLOT 0. You should see the file size on the right. This
+should be a power of two. Adjust the Target to match the file size, then select the number of
+slots that are included in the file. For example, if you had a multi-cart that said
+"32-in-1 Games" you might assume there are 32 slots (a power of two). Or, if you have a ROM
+switcher with 4 switches you likely have 16 slots (2 to the power of 4).
+
+ Click the "Split BIN" button. It will display a message and ask you to confirm. It will write
+out the files using the source file plus the slot numbered extension like "000", "001" and a
+"BIN" extension. When complete it will add the individual files into the slots for you. Give
+the SET a new name, then save the SET. You can now re-order the files or replace slots with new
+files and create an entirely new binary.
+
+** Method 2 - SET file
+
+ Load a SET and adjust the number of slots. There must be a matching BIN file. So, for example if
+the SET is called "myset.txt" then you must have a file called "myset.bin" which was the original
+output file when the binary was created.
+
+ Click on "Split SET" button. This will write out each file with the original file name BUT to
+the same folder as the SET file. When complete it will add the individual files into the slots
+for you, retaining the original filenames, but adjusting the source path to match the SET's
+folder path. This is an easy way to consolidate files with multiple source paths into one folder.
+ 
 
 Github
 ------
